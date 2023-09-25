@@ -118,7 +118,6 @@
             <div>{children}</div>
           )}
         </Toolbar>
-        <>Hallo</>
       </AppBar>
     );
 
