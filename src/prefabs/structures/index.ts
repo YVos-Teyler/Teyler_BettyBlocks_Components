@@ -6,6 +6,7 @@ import { Count } from './Count';
 import { Gridbox } from './Gridbox';
 import { Tab } from './Tab';
 import { ExpansionPanel } from './ExpansionPanel';
+import { Button } from './Button';
 
 export {
   Flexbox,
@@ -15,4 +16,5 @@ export {
   Gridbox,
   Tab,
   ExpansionPanel,
+  Button
 };
