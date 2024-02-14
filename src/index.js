@@ -6,8 +6,6 @@ import DateFnsUtils from '@date-io/date-fns';
 import enLocale from 'date-fns/locale/en-US';
 import nlLocale from 'date-fns/locale/nl';
 import { icons } from './icons';
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
-import { Doughnut } from 'react-chartjs-2';
 
 export default {
   Core,
@@ -16,7 +14,5 @@ export default {
   Pickers,
   Styles,
   DateFnsUtils,
-  DateLocales: { enLocale, nlLocale },
-  ChartJS,
-  Doughnut,
+  DateLocales: { enLocale, nlLocale }
 };
