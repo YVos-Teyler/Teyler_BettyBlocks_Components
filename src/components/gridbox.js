@@ -126,7 +126,7 @@
           display: 'grid',
           gridTemplateColumns: ({ options: { gridType, numberOfColumns, autofitMaxWidth, gridTemplateColumns } }) => 
           gridType === 'Even columns' ? `repeat(${numberOfColumns}, 1fr)` : (
-            gridType === 'Autofit' ? `repeat(auto-fit, minmax(${autofitMaxWidth}, 1fr))` :
+            gridType === 'Autofit' ? `repeat(auto-fit, minmax(min(${autofitMaxWidth}, 100%), 1fr))` :
                 gridTemplateColumns),
 
 
