@@ -74,7 +74,7 @@ export const dataListOptions = {
     label: 'Type',
     value: 'list',
     configuration: {
-      as: 'BUTTONGROUP',
+      as: 'DROPDOWN',
       dataType: 'string',
       allowedInput: [
         {
@@ -82,8 +82,16 @@ export const dataListOptions = {
           value: 'list',
         },
         {
-          name: 'Grid',
-          value: 'grid',
+          name: 'Grid - Even columns',
+          value: 'grid-even-columns',
+        },
+        {
+          name: 'Grid - Autofit',
+          value: 'grid-autofit',
+        },
+        {
+          name: 'Grid - Custom',
+          value: 'grid-custom',
         },
         {
           name: 'Inline',
@@ -93,49 +101,28 @@ export const dataListOptions = {
     },
   }),
 
-  gridType: buttongroup(
-    'gridType',
-    [
-      ['No Grid', 'No Grid'],
-      ['Even columns', 'Even columns'],
-      ['Autofit', 'Autofit'],
-      ['Custom', 'Custom'],
-    ],
-    {
-      value: 'No Grid',
-      configuration: {
-        dataType: 'string',
-        condition: { 
-          type: 'SHOW', 
-          option: 'type', 
-          comparator: 'EQ', 
-          value: 'grid'
-      }
-      },
-    },
-  ),
 
   numberOfColumns: number('Number of columns',{
     value: 1,
     configuration: { 
       condition: { 
           type: 'SHOW', 
-          option: 'gridType', 
+          option: 'type', 
           comparator: 'EQ', 
-          value: 'Even columns'
+          value: 'grid-even-columns'
       }
     },
   }),
 
-  autofitMaxWidth: size('Max width per column',{
+  autofitMaxWidth: size('Min width per column',{
     value: '20rem',
     configuration: { 
       as: 'UNIT',
       condition: { 
           type: 'SHOW', 
-          option: 'gridType', 
+          option: 'type', 
           comparator: 'EQ', 
-          value: 'Autofit'
+          value: 'grid-autofit'
       }
     },
   }),
@@ -145,9 +132,9 @@ export const dataListOptions = {
     configuration: { 
         condition: { 
           type: 'SHOW', 
-          option: 'gridType', 
+          option: 'type', 
           comparator: 'EQ', 
-          value: 'Custom'
+          value: 'grid-custom'
       }
     },
   }),
@@ -157,18 +144,17 @@ export const dataListOptions = {
     configuration: { 
         condition: { 
           type: 'SHOW', 
-          option: 'gridType', 
+          option: 'type', 
           comparator: 'EQ', 
-          value: 'grid'
+          value: 'grid-custom'
       }
     },
   }),
 
-  gap: size('Gap', {
+  gap: size('Gap (only in grid)', {
     value: '1rem',
     configuration: {
       as: 'UNIT',
-      condition: showIf('type', 'EQ', 'grid'),
     },
   }),
 

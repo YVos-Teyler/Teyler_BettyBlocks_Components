@@ -56,7 +56,7 @@
         const [prevData, setPrevData] = useState(null);
         const [filterv2, setFilterV2] = useState({});
         const isInline = type === 'inline';
-        const isGrid = type === 'grid';
+        const isGrid = type === 'grid-autofit' || type === 'grid-even-columns' || type === 'grid-custom';
 
         const [interactionFilter, setInteractionFilter] = useState({});
 
@@ -613,6 +613,7 @@
       },
       inline: {
         display: 'inline-flex',
+        gap: ({ options: {gap} }) => gap,
       },
       header: {
         display: 'flex',
@@ -735,12 +736,12 @@
       grid: {
         boxSizing: 'border-box',
         display: 'grid',
-        gridTemplateColumns: ({ options: { gridType, numberOfColumns, autofitMaxWidth, gridTemplateColumns } }) => 
-        gridType === 'Even columns' ? `repeat(${numberOfColumns}, 1fr)` : (
-          gridType === 'Autofit' ? `repeat(auto-fit, minmax(min(${autofitMaxWidth}, 100%), 1fr))` :
+        gridTemplateColumns: ({ options: { type, numberOfColumns, autofitMaxWidth, gridTemplateColumns } }) => 
+        type === 'Even columns' ? `repeat(${numberOfColumns}, 1fr)` : (
+          type === 'Autofit' ? `repeat(auto-fit, minmax(min(${autofitMaxWidth}, 100%), 1fr))` :
               gridTemplateColumns),
-        gridTemplateRows: ({ options: { gridType, gridTemplateRows } }) => 
-          gridType === 'Custom' ? gridTemplateRows : '',
+        gridTemplateRows: ({ options: { type, gridTemplateRows } }) => 
+        type === 'Custom' ? gridTemplateRows : '',
         justifyItems: ({ options: { alignment } }) => alignment,
         alignItems: ({ options: { valignment } }) => valignment,
         gap: ({ options: {gap} }) => gap,
@@ -758,12 +759,14 @@
         color: '#262A3A',
         textTransform: 'uppercase',
         boxSizing: 'border-box',
+        gap: ({ options: {gap} }) => gap,
       },
       pristine: {
         borderWidth: '0.0625rem',
         borderColor: '#AFB5C8',
         borderStyle: 'dashed',
         backgroundColor: '#F0F1F5',
+        gap: ({ options: {gap} }) => gap,
       },
     };
   },
