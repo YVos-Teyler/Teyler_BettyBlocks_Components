@@ -58,6 +58,7 @@
         const isInline = type === 'inline';
         const isGrid = type === 'grid-autofit' || type === 'grid-even-columns' || type === 'grid-custom';
 
+
         const [interactionFilter, setInteractionFilter] = useState({});
 
         const builderLayout = () => (
@@ -767,6 +768,7 @@
         borderStyle: 'dashed',
         backgroundColor: '#F0F1F5',
         gap: ({ options: {gap} }) => gap,
+
       },
     };
   },

@@ -101,7 +101,6 @@ export const dataListOptions = {
     },
   }),
 
-
   numberOfColumns: number('Number of columns',{
     value: 1,
     configuration: { 
@@ -123,6 +122,7 @@ export const dataListOptions = {
           option: 'type', 
           comparator: 'EQ', 
           value: 'grid-autofit'
+
       }
     },
   }),
