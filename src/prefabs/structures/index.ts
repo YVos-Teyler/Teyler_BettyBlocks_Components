@@ -26,6 +26,7 @@ import { Column } from './Column';
 import { Container } from './Container';
 import { Div } from './Div';
 import { DataList } from './Datalist';
+import { CapacityChart } from './CapacityChart';
 
 // Import all prefab options here
 import { options as autocompleteInputOptions } from './AutocompleteInput/options';
@@ -44,6 +45,7 @@ import { columnOptions as columnOptions} from './Column/options';
 import { containerOptions as containerOptions} from './Container/options';
 import { divOptions as divOptions} from './Div/options';
 import { dataListOptions as dataListOptions} from './Datalist/options';
+import { capacityChartOptions as capacityChartOptions} from './CapacityChart/options';
 
 export {
   Alert,
@@ -73,6 +75,7 @@ export {
   Container,
   Div,
   DataList,
+  CapacityChart,
   autocompleteInputOptions,
   checkboxInputOptions,
   checkboxGroupInputOptions,
@@ -89,4 +92,5 @@ export {
   containerOptions,
   divOptions,
   dataListOptions,
+  capacityChartOptions
 };

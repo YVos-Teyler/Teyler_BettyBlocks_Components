@@ -23,7 +23,9 @@
   "scripts": {
     "start": "bb components serve -p 5002",
     "build": "bb components build",
+    "build-fast": "bb components build --fast",
     "dev": "nodemon",
+    "dev:fast": "nodemon --config nodemonfast.json",
     "lint": "eslint --ext .js,.ts,.tsx ./src",
     "lint:ci": "yarn lint --max-warnings 0"
   },
