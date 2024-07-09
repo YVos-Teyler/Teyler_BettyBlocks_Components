@@ -1,11 +1,9 @@
 (() => ({
-  name: 'CapacityChart',
+  name: 'Chart',
   type: 'CONTENT_COMPONENT',
   allowedTypes: [],
   orientation: 'HORIZONTAL',
-  jsx: (
-    <span>
-      {(() => {
+  jsx: (() => {
         const { env, useText, Link: BLink, useAllQuery, useFilter, getProperty } = B;
         const isDev = env === 'dev';
         const { Chart } = window
@@ -64,7 +62,6 @@
               const hasResult = res && res.results && res.results.length > 0;
               if (hasResult) {
                 B.triggerEvent('onSuccess', res.results);
-                console.log('data', modelData)
                 processData(modelData.results)
               } else {
                 B.triggerEvent('onNoResults');
@@ -78,14 +75,19 @@
           });
 
         const processData = (results) => {
+          console.log('results', results)
           const { name: labelPropertyName } = B.getProperty(options.labelProperty);
           const { name: valuePropertyName } = B.getProperty(options.valueProperty);
+          console.log('valuePropertyName', valuePropertyName)
           const { name: datasetPropertyName } = B.getProperty(options.datasetProperty);
           const { name: datasetTypePropertyName } = B.getProperty(options.datasetTypeProperty);
+          console.log('datasetTypePropertyName', datasetTypePropertyName)
           const { name: axisIDPropertyName } = B.getProperty(options.axisIDProperty);
           const { name: axisPositionPropertyName } = B.getProperty(options.axisPositionProperty);
+          console.log('axisPositionPropertyName', axisPositionPropertyName)
           const { name: axisStackedPropertyName } = B.getProperty(options.axisStackedProperty);
           const { name: datasetStackPropertyName } = B.getProperty(options.datasetStackProperty);
+          console.log('datasetStackPropertyName', datasetStackPropertyName)
 
           const datasets = Object.groupBy(results, (item) => {
             return item[datasetPropertyName] || item.dataset[datasetPropertyName] || 'data'
@@ -108,7 +110,6 @@
               stack: value[0].dataset[datasetStackPropertyName] || value[0][datasetStackPropertyName] || 'y'
             })
           }
-          console.log('processed data', result)
           setDatasets(result)
         }
 
@@ -203,7 +204,6 @@
           chart.config.data.labels = getLabels(chartDatasets)
           chart.config.options.scales = getScales(chartDatasets)
           chart.update()
-          console.log('chart', chart)
         }
 
         useEffect(() => {
@@ -220,19 +220,12 @@
 
         }, [title, chartType, datasets])
 
-        const classes = ["chart-container"]
-        if (isDev) { classes.push("chart-dimensions-dev") }
-
         return (
-          <>
-            <div className={classes.join(' ')}>
+            <div class={classes['chart-container']}>
               <canvas id={componentId}></canvas>
             </div>
-          </>
         );
-      })()}
-    </span>
-  ),
+      })(),
   styles: (B) => (t) => {
     const { mediaMinWidth, Styling } = B;
     const style = new Styling(t);
@@ -240,22 +233,15 @@
       idx === '0' ? '0rem' : style.getSpacing(idx, device);
 
     return {
-      content: {
+      'chart-container': {
         display: 'block',
+        minWidth: ({ options: { width } }) => (width || '100px'),
+        minHeight: ({ options: { height } }) => (height || '100px'),
+        padding: 0,
         marginTop: ({ options: { outerSpacing } }) => getSpacing(outerSpacing[0]),
         marginRight: ({ options: { outerSpacing } }) => getSpacing(outerSpacing[1]),
         marginBottom: ({ options: { outerSpacing } }) => getSpacing(outerSpacing[2]),
         marginLeft: ({ options: { outerSpacing } }) => getSpacing(outerSpacing[3]),
-        textAlign: ({ options: { textAlignment } }) => textAlignment,
-        padding: 0,
-        whiteSpace: 'pre-wrap',
-        color: ({ options: { textColor, type } }) => { return textColor === '[Inherit]' ? style.getFontColor(type) : style.getColor(textColor); },
-        fontFamily: ({ options: { type } }) => `var(--text-fontFamily-${type.toString().toLowerCase()})`,
-        fontSize: ({ options: { type } }) => `var(--text-fontSize-${type.toString().toLowerCase()})`,
-        fontStyle: ({ options: { type } }) => `var(--text-fontStyle-${type.toString().toLowerCase()})`,
-        fontWeight: ({ options }) => { return options.fontWeight === '[Inherit]' ? style.getFontWeight(options.type) : options.fontWeight; },
-        textTransform: ({ options: { type } }) => style.getTextTransform(type),
-        letterSpacing: ({ options: { type } }) => style.getLetterSpacing(type),
         [`@media ${mediaMinWidth(600)}`]: {
           marginTop: ({ options: { outerSpacing } }) => getSpacing(outerSpacing[0], 'Portrait'),
           marginRight: ({ options: { outerSpacing } }) => getSpacing(outerSpacing[1], 'Portrait'),
@@ -277,22 +263,16 @@
           marginLeft: ({ options: { outerSpacing } }) => getSpacing(outerSpacing[3], 'Desktop'),
           fontSize: ({ options: { type } }) => style.getFontSize(type, 'Desktop'),
         },
+        whiteSpace: 'pre-wrap',
+        textAlign: ({ options: { textAlignment } }) => textAlignment,
+        color: ({ options: { textColor, type } }) => { return textColor === '[Inherit]' ? style.getFontColor(type) : style.getColor(textColor); },
+        fontFamily: ({ options: { type } }) => `var(--text-fontFamily-${type.toString().toLowerCase()})`,
+        fontSize: ({ options: { type } }) => `var(--text-fontSize-${type.toString().toLowerCase()})`,
+        fontStyle: ({ options: { type } }) => `var(--text-fontStyle-${type.toString().toLowerCase()})`,
+        fontWeight: ({ options }) => { return options.fontWeight === '[Inherit]' ? style.getFontWeight(options.type) : options.fontWeight; },
+        textTransform: ({ options: { type } }) => style.getTextTransform(type),
+        letterSpacing: ({ options: { type } }) => style.getLetterSpacing(type),
       },
-      nowrap: {
-        whiteSpace: 'nowrap',
-        marginBottom: '-4px',
-      },
-      link: {
-        textDecoration: ['none', '!important'],
-        color: ['inherit', '!important'],
-      },
-      placeholder: {
-        color: '#dadde4',
-      },
-      'chart-dimensions-dev': {
-        maxWidth: '50rem',
-        aspectRatio: '1/2'
-      }
     };
   },
 }))();

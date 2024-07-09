@@ -5,7 +5,7 @@
     orientation: 'HORIZONTAL',
     jsx: (() => {
       const { Chip, Avatar } = window.MaterialUI.Core;
-      const { env, useText, useProperty, Icon } = B;
+      const { env, useText, Icon } = B;
       const {
         label,
         disabled,
@@ -16,8 +16,8 @@
         avatarType,
         size,
         dataComponentAttribute,
-        property,
         hover,
+        backgroundColor
       } = options;
       const isDev = env === 'dev';
   
@@ -31,16 +31,18 @@
         AvatarComponent = AvatarImage;
       }
 
-      const styleClasses = ['Transparant', 'White', 'Light', 'Medium', 'Dark', 'Black', 'Primary', 'Secundary', 'Success', 'Info', 'Warning', 'Danger', 'Accent 1', 'Accent 2', 'Accent 3']
-      
+      const colorVariables = ['primary', 'secondary', 'info', 'success', 'warning', 'danger', 'accent-1', 'accent-2', 'accent-3', 'transparant', 'white', 'light', 'medium', 'dark', 'blakck' ]
+
+      const parsedBackgroundColor = colorVariables.includes(useText(backgroundColor).toLowerCase().replace(' ', '-')) ?
+        `var(--${useText(backgroundColor).toLowerCase().replace(' ', '-')})` : 
+        useText(backgroundColor) 
 
       const ChipComponent = (
         <Chip
           className={[
             classes.root,
             classes.chip,
-            hover ? classes.hover : '',
-            !isDev && styleClasses.includes(useProperty(property)) ? classes[useProperty(property).toLowerCase().replace(' ', '')] : '',
+            hover ? classes.hover : ''
           ].join(' ')}
           label={useText(label)}
           disabled={disabled}
@@ -53,10 +55,11 @@
           avatar={AvatarComponent}
           size={size}
           data-component={useText(dataComponentAttribute) || 'Chip'}
+          style={{ '--background-color': (isDev ? 'var(--primary)' : parsedBackgroundColor )}}
         />
       );
       return isDev ? (
-        <div className={classes.wrapper}>{ChipComponent}</div>
+        <div className={classes.wrapper} >{ChipComponent}</div>
       ) : (
         ChipComponent
       );
@@ -148,7 +151,23 @@
           },
         },
         chip: { 
-          backgroundColor: ({ options: { color } }) => [ style.getColor(color), '!important', ], 
+          '--primary': style.getColor('Primary'),
+          '--secondary': style.getColor('Secondary'),
+          '--danger': style.getColor('Danger'),
+          '--success': style.getColor('Success'),
+          '--info': style.getColor('Info'),
+          '--warning': style.getColor('Warning'),
+          '--accent-1': style.getColor('Accent 1'),
+          '--accent-2': style.getColor('Accent 2'),
+          '--accent-3': style.getColor('Accent 3'),
+          '--transparant': style.getColor('Transparant'),
+          '--white': style.getColor('White'),
+          '--light': style.getColor('Light'),
+          '--medium': style.getColor('Medium'),
+          '--dark': style.getColor('Dark'),
+          '--black': style.getColor('Black'),
+          '--background-color' : 'var(--primary)',
+          backgroundColor: ['var(--background-color)', '!important']
         },
         hover: {
           cursor: ['pointer', '!important'],
@@ -156,24 +175,7 @@
           '&:hover': { 
             scale: 1.05,
            }
-        },
-
-        transparant: { backgroundColor: () => [ style.getColor('Transparant'), '!important', ] },
-        white: { backgroundColor: () => [ style.getColor('White'), '!important', ] },
-        light: { backgroundColor: () => [ style.getColor('Light'), '!important', ] },
-        medium: { backgroundColor: () => [ style.getColor('Medium'), '!important', ] },
-        dark: { backgroundColor: () => [ style.getColor('Dark'), '!important', ] },
-        black: { backgroundColor: () => [ style.getColor('Black'), '!important', ] },
-        primary: { backgroundColor: () => [ style.getColor('Primary'), '!important', ] },
-        secundary: { backgroundColor: () => [ style.getColor('Secundary'), '!important', ] },
-        success: { backgroundColor: () => [ style.getColor('Success'), '!important', ] },
-        info: { backgroundColor: () => [ style.getColor('Info'), '!important', ] },
-        warning: { backgroundColor: () => [ style.getColor('Warning'), '!important', ] },
-        danger: { backgroundColor: () => [ style.getColor('Danger'), '!important', ] },
-        accent1: { backgroundColor: () => [ style.getColor('Accent 1'), '!important', ] },
-        accent2: { backgroundColor: () => [ style.getColor('Accent 2'), '!important', ] },
-        accent3: { backgroundColor: () => [ style.getColor('Accent 3'), '!important', ] },
-
+        }
       };
     },
   }))();
