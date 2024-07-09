@@ -27,28 +27,20 @@
                     <B.GetAll modelId={options.model} filter={options.filter} skip={0} take={200}>
                       
                         {({ loading, error, data, refetch }) => {
-                            if (isDev) {
-                                return <Tag class={classes.placeholder}>Sum</Tag>
-                            }
+                            if (isDev) {  return <Tag class={classes.placeholder}>Sum</Tag> }
 
-                            if (loading) {
-                                return <Tag class={classes.content}>Loading...</Tag>
-                            }
+                            if (loading) {  return <Tag class={classes.content}>Loading...</Tag> }
 
-                            if (error) {
-                                return <Tag class={classes.content}>Error...</Tag>
-                            }
+                            if (error) {  return <Tag class={classes.content}>Error...</Tag> }
 
-                            B.defineFunction('Refetch', () => {
-                              refetch();
-                            });
+                            B.defineFunction('Refetch', () => { refetch(); });
 
                             const { kind, modelId, name } = B.getProperty(options.property);
                             const { results, totalCount } = data;
 
                             const result = '';
                             if (totalCount > 200) { result = `Collection to big (${totalcount}/200 items).` }
-                            else if (name) { result = results.reduce((partialSum, item) => partialSum + item[name], 0) }
+                            else if (name) { result = results.reduce((partialSum, item) => partialSum + item[name]*100, 0) / 100 }
                             else { result = `No property selected.` }
                             
                             return <Tag class={classes.content}>{result}</Tag>

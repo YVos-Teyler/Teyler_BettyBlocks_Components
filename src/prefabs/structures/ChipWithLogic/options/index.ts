@@ -18,7 +18,7 @@ export const categories = [
   {
     label: 'Styling',
     expanded: false,
-    members: ['font', 'color', 'textColor'],
+    members: ['font', 'textColor'],
   },
   {
     label: 'Spacing',
@@ -41,9 +41,10 @@ export const chipOptions = {
   label: variable('Label', {
     value: ['Label'],
   }),
-  property: property('Styling property', {
-    value: '',
+  backgroundColor: variable('Background color', {
+    value: [''],
   }),
+
   disabled: toggle('Disabled', {
     value: false,
   }),
@@ -60,9 +61,6 @@ export const chipOptions = {
     },
   }),
   font: font('Text style', { value: 'Body1' }),
-  color: color('Color', {
-    value: ThemeColor.PRIMARY,
-  }),
   textColor: color('Text color', {
     value: ThemeColor.WHITE,
   }),
